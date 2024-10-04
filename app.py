@@ -1,4 +1,3 @@
-import jsonify.convert
 import flask,requests,pickle,jsonify
 
 app = flask.Flask(__name__)
@@ -13,3 +12,9 @@ def send_data():
 
 
     pass
+
+
+if __name__ == 'main':
+    app.run()
+
+    
