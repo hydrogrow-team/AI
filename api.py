@@ -1,20 +1,25 @@
 from flask import Flask
 import requests, pickle, json
-
+from flask import request
 app = Flask(__name__)
 
 
 model = None
-with open("RandomFores.pkl", "rb") as f:
+with open("RandomForest.pkl", "rb") as f:
     model = pickle.load(f)
 
 
 @app.route("/predict", methods=["GET"])
 def send_data():
     global model
-    data = requests.get("")
+    N = float(request.args.get("N"))
+    temp = float(request.args.get("temp"))
+    hum = float(request.args.get("hum"))
+    ph = float(request.args.get("ph"))
+    rainfall = float(request.args.get("rainfall"))
+    data = [[N, temp, hum, ph, rainfall]]
     predictions = model.predict_proba(data)
-    return predictions
+    return json.dumps(predictions.tolist())
 
 
 if __name__ == "__main__":
